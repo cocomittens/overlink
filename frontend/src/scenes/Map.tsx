@@ -10,7 +10,7 @@ import {
 import MapNode from "../components/MapNode";
 import React, { useEffect, useMemo, useRef } from "react";
 import { useAtom, useAtomValue } from "jotai";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { getMapNodes } from "../api";
 
 export default function Map() {

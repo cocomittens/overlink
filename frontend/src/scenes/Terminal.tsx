@@ -10,7 +10,7 @@ import {
   traceStateAtom,
 } from "../store";
 import "../styles/terminal.scss";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 import { loadable } from "jotai/utils";
 import { useAtomValue } from "jotai";
 

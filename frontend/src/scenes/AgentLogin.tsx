@@ -5,7 +5,7 @@ import SavedUserList, { SavedUser } from "../components/SavedUserList";
 import { useAtom } from "jotai";
 import { userAtom, soundEnabledAtom } from "../store";
 import { login as apiLogin } from "../api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export default function AgentLogin() {
   const savedUsers: SavedUser[] = [{ username: "demo", password: "demo123" }];

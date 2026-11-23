@@ -11,7 +11,7 @@ import {
   traceStateAtom,
   savedLoginsRefreshAtom,
 } from "../store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import SavedUserList, { SavedUser } from "../components/SavedUserList";
 import { getMapNodes } from "../api";
 

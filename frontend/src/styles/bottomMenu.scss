@@ -10,6 +10,14 @@
   align-items: flex-end;
   justify-content: space-between;
 
+  // The bar spans the full width; let clicks in its empty space reach the
+  // page underneath (e.g. the last row of a file list on short screens).
+  pointer-events: none;
+
+  > * {
+    pointer-events: auto;
+  }
+
   ul {
     list-style: none;
   }

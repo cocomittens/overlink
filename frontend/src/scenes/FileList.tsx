@@ -9,7 +9,7 @@ import {
   deletedServerFilesAtom,
   traceStateAtom,
 } from "../store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useAtomValue } from "jotai";
 
 export default function FileList() {

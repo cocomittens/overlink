@@ -10,7 +10,7 @@ import {
   soundEnabledAtom,
   traceStateAtom,
 } from "../store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const TraceTracker: React.FC = () => {
   const [currentSoftware, setCurrentSoftware] = useAtom(currentSoftwareAtom);

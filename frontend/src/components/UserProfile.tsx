@@ -11,7 +11,7 @@ import {
 import { loadable } from "jotai/utils";
 import { calculateLevelProgress } from "../util/level";
 import CancelIcon from "./CancelIcon";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export function UserProfile({ onClose }: { onClose: () => void }) {
   const [user, setUser] = useAtom(userAtom);

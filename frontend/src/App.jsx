@@ -6,7 +6,7 @@ import {
   BrowserRouter as Router,
   Routes,
   useLocation,
-} from "react-router-dom";
+} from "react-router";
 import { useEffect, useState } from "react";
 
 import AgentLogin from "./scenes/AgentLogin.tsx";

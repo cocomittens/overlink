@@ -182,14 +182,14 @@ export function MissionDetails({
               <div className="large-field" style={{ padding: "1% 2%" }}>
                 <strong>Description:</strong>
                 <div>{mission.description}</div>
+                {error && (
+                  <div className="login-error" role="alert">
+                    {error}
+                  </div>
+                )}
               </div>
             </div>
           </div>
-          {error && (
-            <div className="login-error" role="alert" style={{ padding: "0 2%" }}>
-              {error}
-            </div>
-          )}
           <div className="action-buttons">
             <div className="mission-action">
               <span

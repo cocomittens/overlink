@@ -8,7 +8,7 @@ import {
 } from "../store";
 
 import { BackgroundMusic } from "./BackgroundMusic";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import React, { useEffect, useRef, useCallback } from "react";
 import { useAtom, useAtomValue } from "jotai";
 import { calculateLevelProgress } from "../util/level";
