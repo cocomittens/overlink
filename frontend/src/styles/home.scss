@@ -1,0 +1,35 @@
+@use "./variables" as vars;
+
+.home {
+  max-width: 560px;
+  margin: 8vh auto 0;
+  padding: 0 16px 140px;
+  text-align: left;
+  line-height: 1.5;
+
+  h1 {
+    font-size: 1.6rem;
+    margin: 0 0 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    margin: 1.5rem 0 0.5rem;
+    color: vars.$cyan-mid;
+  }
+
+  ol {
+    margin: 0;
+    padding-left: 1.4rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+
+  .home-alert {
+    color: vars.$pink-mid;
+    font-weight: bold;
+    margin: 0 0 1rem;
+  }
+}

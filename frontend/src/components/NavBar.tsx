@@ -94,7 +94,7 @@ const NavBar: React.FC = () => {
 
         <li className="right-controls">
           <BackgroundMusic />
-          <span className="money">${money}</span>
+          <span className="money">{money} cr</span>
           <div
             className="level-display"
             aria-label={`Level ${level} progress ${Math.round(

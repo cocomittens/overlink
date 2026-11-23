@@ -18,6 +18,7 @@ export default function AgentLogin() {
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSlow, setIsSlow] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,6 +51,8 @@ export default function AgentLogin() {
 
     setIsSubmitting(true);
     setError(null);
+    // The free-tier backend sleeps when idle; tell the player why login is slow.
+    const slowTimer = window.setTimeout(() => setIsSlow(true), 2500);
     try {
       const data = await apiLogin(username, password);
       if (data?.success) {
@@ -64,8 +67,10 @@ export default function AgentLogin() {
         setError(data?.message || data?.error || "Login failed");
       }
     } catch (e) {
-      setError("Login failed");
+      setError("Could not reach the server. Try again in a moment.");
     } finally {
+      window.clearTimeout(slowTimer);
+      setIsSlow(false);
       setIsSubmitting(false);
     }
   };
@@ -106,7 +111,18 @@ export default function AgentLogin() {
             </div>
           </form>
         </div>
-        {error && <div className="login-error">{error}</div>}
+        <div
+          className={`login-status ${error ? "login-error" : "login-hint"}`}
+          role="status"
+        >
+          {error
+            ? error
+            : isSlow
+            ? "Waking up the server. The first login can take up to a minute."
+            : !isSubmitting && !selectedUser
+            ? "Select the demo user under Saved Logins, then press Proceed."
+            : ""}
+        </div>
         <button
           type="submit"
           className={`login-button ${isSubmitting ? "disabled" : ""}`}

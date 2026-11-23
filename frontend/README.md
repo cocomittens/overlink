@@ -1,12 +1,23 @@
-# React + Vite
+# Overlink frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 19 + Vite single-page app for [Overlink](../README.md).
 
-Currently, two official plugins are available:
+## Scripts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- `npm run dev`: start the dev server on http://localhost:5173
+- `npm run build`: production build into `dist/`
+- `npm run preview`: serve the production build locally
+- `npm run lint`: run ESLint
 
-## Expanding the ESLint configuration
+## Configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+`VITE_API_BASE` sets the backend API URL. It defaults to
+`http://localhost:5000/api` for local development.
+
+## Layout
+
+- `src/scenes/`: full-screen views (login, map, missions, terminal, files)
+- `src/components/`: nav bar, bottom menu and its panels (shop, hard drive, profile)
+- `src/software/`: the in-game tools (Password Cracker, Copier, Deleter, Trace Monitor)
+- `src/store/`: Jotai atoms, including the state persisted to `localStorage`
+- `src/api/`: calls to the backend

@@ -1,7 +1,30 @@
-# What is Overlink?
-Overlink is an Uplink-inspired web-based cybersecurity simulation game with modernized quality of life features. 
+# Overlink
 
-## Running the Game
+Overlink is an Uplink-inspired, browser-based hacking simulation game with modernized quality-of-life features. Take jobs, route a connection across the map, crack your way into systems, copy or delete files, and disconnect before you are traced.
+
+**Play it: https://overlink-phi.vercel.app** (select the `demo` user and press Proceed)
+
+The backend runs on a free hosting tier that sleeps when idle, so the first login can take up to a minute.
+
+## Tech Stack
+
+| Layer | Tools |
+| --- | --- |
+| Frontend | React 19, React Router 7, Jotai, Sass, Vite |
+| Backend | Node.js, Express 5, SQLite (better-sqlite3) |
+| Hosting | Vercel (frontend), Render (backend) |
+
+## How It Works
+
+* The backend serves missions, map nodes and file-system data from SQLite, and records which missions each user has accepted and completed. It seeds its own data on startup.
+* The frontend keeps game state (money, software, hard drive, saved logins, trace progress) in Jotai atoms that persist to `localStorage`, so a refresh does not lose your session.
+* In-game tools (Password Cracker, Copier, Deleter, Trace Monitor) are floating widgets. The Copier and Deleter are picked up and then clicked onto a file.
+* A trace timer starts when you connect to a monitored system. Its speed depends on the system's security profile, and reaching 100% disconnects you.
+
+## Running Locally
+
+Requires Node.js 20 or newer.
+
 To start the backend:
   * Navigate to the `backend` folder
   * Type `npm i`
@@ -11,6 +34,8 @@ To start the frontend:
   * Navigate to the `frontend` folder
   * Type `npm i`
   * Type `npm run dev`
+
+The frontend expects the API at `http://localhost:5000/api`. Set `VITE_API_BASE` to point it elsewhere.
 
 ## Gameplay
 ### Missions
@@ -28,7 +53,10 @@ The map can also be accessed in the navigation menu. It displays all known devic
 
 Upon connecting to an endpoint that you do not yet have access to, you will be presented with a login screen. You will need to find the correct username and password in order to access the system.
 
-Use the Password Cracker (and additional software for more complex systems) to obtain credentials and gain access to the system. Click on the `Code` input field to start the Password Cracker.
+Use the Password Cracker (and additional software for more complex systems) to obtain credentials and gain access to the system. Launch it from the tools menu in the bottom left, then click on the `Code` input field to start cracking.
+
+### Shop
+Mission payments can be spent in the shop (bottom menu) on new software and upgrades, such as a faster Password Cracker or an Undeleter.
 
 ### Terminal
 <img width="343" alt="image" src="https://github.com/user-attachments/assets/5202e880-d694-4307-8bee-f017ba3d7892" />

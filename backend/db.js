@@ -307,7 +307,7 @@ function initDatabase() {
       title: "Destroy incriminating connection logs",
       description:
         "One of our operatives left a trail on a SilentWave internal server. We need that connection log gone before their sysadmin runs the morning audit. Break into the system, find 'connection.log' on the file server, and delete it.",
-      employer: "SilentWave Analytics",
+      employer: "Meridian Freight",
       date: "2023-10-02",
       payment: 1400,
       difficulty: 2,

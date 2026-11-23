@@ -122,6 +122,20 @@ form {
     margin: 0.5rem 0;
 }
 
+// Reserves its space and never widens the form, so messages don't shift the layout.
+.login-status {
+    min-height: 2.8em;
+    width: 0;
+    min-width: 100%;
+    font-size: 0.9em;
+}
+
+.login-hint {
+    color: vars.$cyan-mid;
+    margin: 0.5rem 0;
+    font-size: 0.9em;
+}
+
 .password-breaker-container {
     display: flex;
     flex-direction: column;

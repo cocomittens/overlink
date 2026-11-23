@@ -112,10 +112,8 @@ export default function Map() {
   };
 
   const handleConnect = () => {
-    console.log("handleConnect clicked", { chain, currentNode });
     // Toggle connection: disconnect if already connected
     if (currentNode) {
-      console.log("disconnecting", currentNode);
       if (soundEnabled && cancelSoundRef.current) {
         cancelSoundRef.current.currentTime = 0;
         cancelSoundRef.current.play().catch(() => {});
@@ -127,7 +125,6 @@ export default function Map() {
     // Connect to the last selected node
     const targetId = chain[chain.length - 1];
     if (!targetId) return;
-    console.log("connecting", targetId);
     setCurrentNode(targetId);
     const nodeObj = nodes.find((n) => n.id === targetId);
     if (nodeObj?.password) {
