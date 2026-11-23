@@ -1,7 +1,7 @@
 module.exports = [
   {
     id: "internal_1",
-    name: "Nordsec Internal Services",
+    name: "NordSec Internal Services",
     securityTier: "low",
     traceProfileId: "high",
     hasTrace: true,

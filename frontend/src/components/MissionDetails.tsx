@@ -16,6 +16,18 @@ import { useAtomValue, useAtom, useSetAtom } from "jotai";
 import { completeMission } from "../api";
 import CancelIcon from "../components/CancelIcon";
 
+const hasSavedLogin = (nodeId: string) => {
+  if (typeof localStorage === "undefined") return false;
+  try {
+    const parsed = JSON.parse(
+      localStorage.getItem(`savedLogins-${nodeId}`) ?? "[]"
+    );
+    return Array.isArray(parsed) && parsed.length > 0;
+  } catch {
+    return false;
+  }
+};
+
 export function MissionDetails({
   missionId,
   onClose,
@@ -53,6 +65,10 @@ export function MissionDetails({
     if (errorSoundRef.current) errorSoundRef.current.volume = 0.6;
   }, []);
 
+  useEffect(() => {
+    setError(null);
+  }, [missionId]);
+
   const mission =
     missionId !== null
       ? currentMissions.find((m) => m.id === missionId) ?? null
@@ -83,14 +99,26 @@ export function MissionDetails({
     e.stopPropagation();
     if (!mission || !user) return;
 
+    const fail = (message: string) => {
+      if (soundEnabled && errorSoundRef.current) {
+        errorSoundRef.current.currentTime = 0;
+        errorSoundRef.current.play().catch(() => {});
+      }
+      setError(message);
+    };
+
     const targets = mission.targets ?? [];
     for (const target of targets) {
+      if (target.objective === "crack") {
+        // A saved login for the node is the record that its password was cracked.
+        if (!hasSavedLogin(target.nodeId)) {
+          fail("Objective incomplete: crack the target system's password.");
+          return;
+        }
+      }
       if (target.objective === "copy" && target.filePattern) {
         if (!hardDrive.files.includes(target.filePattern)) {
-          if (soundEnabled && errorSoundRef.current) {
-            errorSoundRef.current.currentTime = 0;
-            errorSoundRef.current.play().catch(() => {});
-          }
+          fail(`Objective incomplete: copy ${target.filePattern} to your hard drive.`);
           return;
         }
       }
@@ -99,10 +127,7 @@ export function MissionDetails({
           (entry) => entry.name === target.filePattern
         );
         if (!wasDeleted) {
-          if (soundEnabled && errorSoundRef.current) {
-            errorSoundRef.current.currentTime = 0;
-            errorSoundRef.current.play().catch(() => {});
-          }
+          fail(`Objective incomplete: delete ${target.filePattern} from the target system.`);
           return;
         }
       }
@@ -110,6 +135,11 @@ export function MissionDetails({
 
     try {
       const result = await completeMission(user.id, mission.id);
+      if (result?.error) {
+        fail("Could not complete the mission. Try again.");
+        refreshMissions();
+        return;
+      }
       if (soundEnabled && successSoundRef.current) {
         successSoundRef.current.currentTime = 0;
         successSoundRef.current.play().catch(() => {});
@@ -124,7 +154,8 @@ export function MissionDetails({
       onClose();
       refreshMissions();
     } catch (err) {
-
+      console.error("Failed to complete mission:", err);
+      fail("Could not complete the mission. Try again.");
     }
   };
 
@@ -154,6 +185,11 @@ export function MissionDetails({
               </div>
             </div>
           </div>
+          {error && (
+            <div className="login-error" role="alert" style={{ padding: "0 2%" }}>
+              {error}
+            </div>
+          )}
           <div className="action-buttons">
             <div className="mission-action">
               <span

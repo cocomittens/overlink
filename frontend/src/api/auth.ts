@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:5000/api';
+import { API_BASE } from "./config";
 
 export const login = async (username: string, password: string) => {
     const response = await fetch(`${API_BASE}/login`, {

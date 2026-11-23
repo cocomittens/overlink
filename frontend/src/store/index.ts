@@ -57,6 +57,11 @@ export const currentMissionsAtom = atom<Promise<Mission[]>>(async (get) => {
   return all.filter((m) => m.status === "accepted");
 });
 
+export const completedMissionsCountAtom = atom<Promise<number>>(async (get) => {
+  const all = await get(userMissionsAtom);
+  return all.filter((m) => m.status === "completed").length;
+});
+
 export const missionsAtom = atom<Promise<Mission[]>>(async (get) => {
   const allMissions = await get(allMissionsAtom);
   const userMissions = await get(userMissionsAtom);
@@ -148,13 +153,13 @@ export const initialShopItems: ShopItem[] = [
   {
     id: 1,
     name: "Undeleter",
-    description: "Undeletes deleted files",
+    description: "Restores deleted files.",
     price: 1000,
   },
   {
     id: 3,
     name: "Password Cracker v2",
-    description: "Makes password cracker faster.",
+    description: "Makes the Password Cracker faster.",
     price: 1000,
   },
   {

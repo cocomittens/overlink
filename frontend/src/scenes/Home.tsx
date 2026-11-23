@@ -21,7 +21,7 @@ export default function Home() {
       {traced
         ? "You have been traced."
         : showWelcome
-        ? "Welcome to the game."
+        ? "Welcome to Overlink."
         : ""}
     </div>
   );

@@ -100,6 +100,7 @@ export default function Missions() {
       setMission(null);
       refreshMissions();
     } catch (err) {
+      console.error("Failed to reset missions:", err);
     }
   };
 
@@ -107,7 +108,7 @@ export default function Missions() {
     missionsLoadable.state === "loading" ||
     currentMissionsLoadable.state === "loading"
   ) {
-    return <div className="missions-container">Loading missions...</div>;
+    return <div className="missions-container">Loading missions…</div>;
   }
 
   if (
@@ -125,7 +126,7 @@ export default function Missions() {
           className="material-icons"
           style={{ cursor: "pointer", fontSize: "1.2em", opacity: 0.7, position: "relative", top: "2px" }}
           onClick={handleReset}
-          title="Reset all missions and money"
+          title="Reset missions, money, XP and files"
         >
           restart_alt
         </span>

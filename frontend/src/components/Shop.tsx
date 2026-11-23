@@ -119,7 +119,7 @@ export function Shop({ onClose }: { onClose: () => void }) {
                 <div className="field-row">
                   <strong>{selectedItem.name}</strong>
                 </div>
-                <div className="field-row">Price: ${selectedItem.price}</div>
+                <div className="field-row">Price: {selectedItem.price} credits</div>
                 <div className="field-row">{selectedItem.description}</div>
                 {!canAfford && (
                   <div className="field-row" style={{ color: "#ff6b6b", fontSize: "0.85em" }}>

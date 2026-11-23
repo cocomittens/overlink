@@ -182,7 +182,7 @@ function initDatabase() {
       id: "internal_1",
       top: 500,
       left: 350,
-      name: "Nordsec Internal Services",
+      name: "NordSec Internal Services",
       admin: 0,
       account: 1,
       active: 0,
@@ -271,11 +271,18 @@ function initDatabase() {
     } else {
       db.prepare(
         `UPDATE nodes 
-         SET securityTier = COALESCE(securityTier, ?),
+         SET name = ?,
+             securityTier = COALESCE(securityTier, ?),
              traceProfileId = COALESCE(traceProfileId, ?),
              hasTrace = COALESCE(hasTrace, ?)
          WHERE id = ?`
-      ).run(node.securityTier, node.traceProfileId, node.hasTrace, node.id);
+      ).run(
+        node.name,
+        node.securityTier,
+        node.traceProfileId,
+        node.hasTrace,
+        node.id
+      );
     }
   });
 
@@ -284,7 +291,7 @@ function initDatabase() {
       id: 1,
       title: "Extract credentials from a low-security intranet node",
       description:
-        "A small firm needs access to an employee portal they locked themselves out of. Break into their intranet server, run a password-breaker on the 'auth.txt' file, and return the recovered credentials.",
+        "A small firm needs access to an employee portal they locked themselves out of. Break into their intranet server, run the Password Cracker on the 'auth.txt' file, and return the recovered credentials.",
       employer: "NordSec Consultants",
       date: "2023-10-01",
       payment: 900,

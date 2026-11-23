@@ -1,8 +1,8 @@
 # What is Overlink?
-Overlink is an Uplink inspired web-based cybersecurity simulation game with modernized quality of life features. 
+Overlink is an Uplink-inspired web-based cybersecurity simulation game with modernized quality of life features. 
 
 ## Running the Game
-To start the backend"
+To start the backend:
   * Navigate to the `backend` folder
   * Type `npm i`
   * Type `npm run dev`
@@ -28,7 +28,7 @@ The map can also be accessed in the navigation menu. It displays all known devic
 
 Upon connecting to an endpoint that you do not yet have access to, you will be presented with a login screen. You will need to find the correct username and password in order to access the system.
 
-Use the Password Breaker (and additional software for more complex systems) to obtain credentials and gain access to the system. Click on the `Code` input field to start the Password Breaker.
+Use the Password Cracker (and additional software for more complex systems) to obtain credentials and gain access to the system. Click on the `Code` input field to start the Password Cracker.
 
 ### Terminal
 <img width="343" alt="image" src="https://github.com/user-attachments/assets/5202e880-d694-4307-8bee-f017ba3d7892" />
@@ -43,5 +43,4 @@ You will then be able to view and interact with (copy, delete, etc) the files in
 Some of the upcoming features currently in development include (but aren't limited to):
 * Tutorial mission to illustrate gameplay for first time users
 * More missions and mission types
-* Store to upgrade and purchase new software
 * Continue to fix bugs, address edge cases, and polish existing game mechanics

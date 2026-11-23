@@ -2,13 +2,23 @@ import "../styles/missions.scss";
 
 import React, { useRef } from "react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { userAtom, soundEnabledAtom, savedLoginsRefreshAtom } from "../store";
+import {
+  userAtom,
+  soundEnabledAtom,
+  savedLoginsRefreshAtom,
+  completedMissionsCountAtom,
+} from "../store";
+import { loadable } from "jotai/utils";
+import { calculateLevelProgress } from "../util/level";
 import CancelIcon from "./CancelIcon";
 import { useNavigate } from "react-router-dom";
 
 export function UserProfile({ onClose }: { onClose: () => void }) {
   const [user, setUser] = useAtom(userAtom);
   const soundEnabled = useAtomValue(soundEnabledAtom);
+  const completedLoadable = useAtomValue(loadable(completedMissionsCountAtom));
+  const completedMissions =
+    completedLoadable.state === "hasData" ? completedLoadable.data : 0;
   const navigate = useNavigate();
   const logoutSoundRef = useRef<HTMLAudioElement | null>(null);
 
@@ -66,10 +76,10 @@ export function UserProfile({ onClose }: { onClose: () => void }) {
           </div>
           <div className="small-field">
             <strong>Level:</strong>{" "}
-            {user ? Math.floor((user.xp ?? 0) / 100) : 0} / XP: {user?.xp ?? 0}
+            {calculateLevelProgress(user?.xp ?? 0).level} / XP: {user?.xp ?? 0}
           </div>
           <div className="small-field">
-            <strong>Completed missions:</strong> {user?.completedMissions ?? 0}
+            <strong>Completed missions:</strong> {completedMissions}
           </div>
         </div>
         <div className="action-buttons">
@@ -77,7 +87,7 @@ export function UserProfile({ onClose }: { onClose: () => void }) {
             <span>Clear Logins</span>
           </div>
           <div className="mission-action" onClick={handleLogout}>
-            <span>Logout</span>
+            <span>Log out</span>
           </div>
         </div>
       </div>

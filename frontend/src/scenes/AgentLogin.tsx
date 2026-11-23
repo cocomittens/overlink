@@ -40,11 +40,11 @@ export default function AgentLogin() {
 
   const handleProceed = async () => {
     if (user) {
-      setError("error: user already logged in");
+      setError("You are already logged in");
       return;
     }
     if (!username || !password) {
-      setError("Select a user to login");
+      setError("Select a user to log in");
       return;
     }
 

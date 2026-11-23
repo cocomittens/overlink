@@ -7,7 +7,17 @@ const mapData = require("./mapData");
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+// Only the deployed frontend and local dev may call the API from a browser.
+// Override with a comma-separated CORS_ORIGINS env var (e.g. for preview deploys).
+const allowedOrigins = (
+  process.env.CORS_ORIGINS ||
+  "https://overlink-phi.vercel.app,http://localhost:5173,http://localhost:4173"
+)
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 app.get("/api/missions", (req, res) => {
@@ -31,24 +41,6 @@ app.get("/api/missions", (req, res) => {
   } catch (error) {
     console.error("Error fetching missions:", error);
     res.status(500).json({ error: "Failed to fetch missions" });
-  }
-});
-
-app.post("/api/missions", (req, res) => {
-  try {
-    const { title, date, payment, difficulty, minRating } = req.body;
-    const stmt = db.prepare(`
-      INSERT INTO missions (title, date, payment, difficulty, minRating)
-      VALUES (?, ?, ?, ?, ?)
-    `);
-    const result = stmt.run(title, date, payment, difficulty, minRating);
-    res.json({
-      id: result.lastInsertRowid,
-      message: "Mission created successfully",
-    });
-  } catch (error) {
-    console.error("Error creating mission:", error);
-    res.status(500).json({ error: "Failed to create mission" });
   }
 });
 
@@ -119,11 +111,13 @@ app.post("/api/users/:userId/missions/:missionId/complete", (req, res) => {
     const stmt = db.prepare(`
       UPDATE user_missions
       SET status = 'completed', completed_at = CURRENT_TIMESTAMP
-      WHERE user_id = ? AND mission_id = ?
+      WHERE user_id = ? AND mission_id = ? AND status = 'accepted'
     `);
     const result = stmt.run(userId, missionId);
     if (result.changes === 0) {
-      return res.status(404).json({ error: "Mission not found" });
+      return res
+        .status(404)
+        .json({ error: "Mission not found or already completed" });
     }
     const mission = db.prepare("SELECT difficulty FROM missions WHERE id = ?").get(missionId);
     const xpAwarded = (mission?.difficulty ?? 1) * 50;
